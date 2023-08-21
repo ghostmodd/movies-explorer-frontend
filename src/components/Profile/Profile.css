@@ -1,0 +1,57 @@
+.edit-profile {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 124px 0 215px;
+}
+
+.edit-profile__input {
+  text-align: right;
+  width: 120px;
+  font-size: 11px;
+  color: white;
+  border: none;
+  margin: 0;
+}
+
+.edit-profile__input-label {
+  width: 130px;
+  font-weight: 500;
+  font-size: 11px;
+  margin: 0;
+}
+
+.edit-profile__toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  border: none;
+}
+
+.edit-profile__btn-edit-profile {
+  font-size: 13px;
+  color: white;
+  background-color: inherit;
+}
+
+.edit-profile__btn-logout {
+  font-size: 13px;
+  background-color: inherit;
+  color: #EE3465;
+}
+
+@media screen and (max-width: 768px) {
+  .edit-profile {
+    margin: 96px 0 203px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .edit-profile {
+    margin: 79px 0 372px;
+  }
+
+  .edit-profile__input-container {
+    gap: 10px;
+  }
+}

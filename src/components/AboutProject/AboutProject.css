@@ -1,0 +1,164 @@
+.about-project {
+  display: flex;
+  flex-direction: column;
+  gap: 110px;
+  padding: 70px 0 132px;
+}
+
+.two-columns {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 0;
+  margin: 0;
+}
+
+.two-columns__item {
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.two-columns__heading {
+  font-weight: normal;
+  font-size: 20px;
+  letter-spacing: -0.8px;
+  color: white;
+  margin: 0 0 26px;
+}
+
+.two-columns__paragraph {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: white;
+  margin: 0;
+}
+
+.timeline {
+  width: 100%;
+  height: 35px;
+  display: flex;
+  background-color: #303030;
+}
+
+.timeline__segment {
+  position: relative;
+}
+
+.timeline__segment_type_backend {
+  width: 20%;
+  height: 100%;
+}
+
+.timeline__segment_color_lime {
+  background-color: #3DDC84;
+}
+
+.timeline__segment_type_frontend {
+  width: 80%;
+  height: 100%;
+}
+
+.timeline__segment-text {
+  font-size: 14px;
+  text-align: center;
+  padding: 9px 14px;
+  margin: 0;
+}
+
+.timeline__segment-text_color_black {
+  color: black;
+}
+
+.timeline__segment-text_color_white {
+  color: white;
+}
+
+.timeline__segment-caption {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  line-height: 17px;
+  position: absolute;
+  bottom: -31px;
+  color: #8B8B8B;
+  margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .about-project {
+    gap: 93px;
+    padding-bottom: 121px;
+  }
+
+  .two-columns__heading {
+    margin-bottom: 22px;
+  }
+
+  .two-columns__paragraph {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .timeline__segment-text {
+    padding: 9px 0;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .timeline__segment-text {
+    font-size: 11px;
+  }
+
+  .two-columns {
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  .timeline__segment_type_backend {
+    width: 35%;
+  }
+
+  .timeline__segment_type_frontend {
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .about-project {
+    gap: 60px;
+    padding: 60px 0 94px;
+  }
+
+  .two-columns__heading {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .two-columns__paragraph {
+    font-size: 11px;
+    line-height: 16px;
+    margin-bottom: 0;
+  }
+
+  .timeline__segment_type_backend {
+    width: 35%;
+  }
+
+  .timeline__segment_type_frontend {
+    width: 65%;
+  }
+
+  .timeline__segment-text {
+    font-size: 11px;
+    padding: 11px 10px;
+  }
+
+  .timeline__segment-caption {
+    font-size: 11px;
+    bottom: -27px;
+  }
+}

@@ -1,0 +1,47 @@
+.not-found-error {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found-error__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.not-found-error__code {
+  font-weight: 400;
+  font-size: 140px;
+  margin: 0 0 5px;
+}
+
+.not-found-error__description {
+  max-width: 400px;
+  font-size: 16px;
+  margin: 0 0 184px;
+}
+
+.not-found-error__btn-previous-page {
+  font-size: 14px;
+  background-color: inherit;
+  color: #4285F4;
+}
+
+@media screen and (max-width: 320px) {
+  .not-found-error__code {
+    max-width: 300px;
+    font-size: 80px;
+    margin-bottom: 10px;
+  }
+
+  .not-found-error__description {
+    font-size: 12px;
+    margin-bottom: 284px;
+  }
+
+  .not-found-error__btn-previous-page {
+    font-size: 12px;
+  }
+}

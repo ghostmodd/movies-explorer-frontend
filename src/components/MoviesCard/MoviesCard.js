@@ -14,7 +14,7 @@ function MoviesCard(props) {
   }
 
   return (
-    <div className='movies-card' style={{ display: `${isDeleted ? "none" : "flex"}` }}>
+    <div className={`movies-card ${isDeleted ? "movies-card_deleted" : ""}`}>
       <div className='movies-card__description'>
         <h3 className='movies-card__title'>{props.title}</h3>
         <p className='movies-card__caption'>{props.duration} минут</p>
@@ -23,7 +23,7 @@ function MoviesCard(props) {
       <img className='movies-card__image' src={props.image} alt={`Обложка фильма "${props.title}"`} />
 
       {
-        props.place === "moviesList"
+        props.place === "movies-list"
         &&
         <button
           className={`movies-card__btn-save-movie ${isSaved ? 'movies-card__btn-save-movie_activated' : ''} button`}
@@ -32,7 +32,7 @@ function MoviesCard(props) {
       }
 
       {
-        props.place === "savedMovies"
+        props.place === "saved-movies"
         &&
         <button
           className="movies-card__btn-delete-movie button"

@@ -18,11 +18,11 @@ function SearchForm() {
           <button className="search-form__btn-search button"></button>
         </fieldset>
 
-        <fieldset className="search-form__query-details-container">
-          <input className="search-form__invisible-checkbox" id="short-films" type="checkbox"
+        <fieldset className="search-form__query-details-container fieldset">
+          <input className="search-form__invisible-checkbox" tabIndex="0" id="short-films" type="checkbox"
             checked={searchShortFilms} onChange={() => {
             }} />
-          <span className="search-form__short-film-checkbox button" onClick={onCheckboxChecked}></span>
+          <span className="search-form__short-film-checkbox" onClick={onCheckboxChecked}></span>
           <label htmlFor="short-films" className="search-form__label">Короткометражки</label>
         </fieldset>
       </form>

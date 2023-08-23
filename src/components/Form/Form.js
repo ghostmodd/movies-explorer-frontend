@@ -5,6 +5,7 @@ import Logo from "../Logo/Logo";
 function Form(props) {
   function handleSubmit(evt) {
     evt.preventDefault();
+    props.onSubmit();
   }
 
   return (

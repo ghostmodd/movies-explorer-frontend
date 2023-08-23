@@ -11,7 +11,7 @@ import Footer from "../Footer/Footer";
 function Main() {
   return (
     <>
-      <Header backgroundColor="#073042" >
+      <Header place="main" backgroundColor="blue" >
         <Navigation isLogged={false} place="header" />
       </Header>
 
@@ -23,7 +23,7 @@ function Main() {
         <Portfolio />
       </main>
 
-      <Footer description='Учебный проект Яндекс.Практикум х BeatFilm.' />
+      <Footer place="main" description='Учебный проект Яндекс.Практикум х BeatFilm.' />
     </>
   )
 }

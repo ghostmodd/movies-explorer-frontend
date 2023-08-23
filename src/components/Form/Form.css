@@ -43,17 +43,27 @@
   padding-bottom: 16px;
   border: none;
   border-bottom: 1px solid #424242;
+  margin-bottom: 16px;
 }
 
-.form__input-container:last-child {
-  padding-top: 16px;
-  padding-bottom: 0;
+
+.form__input-container_type_profile:nth-of-type(2) {
+  margin-bottom: 0;
   border: none;
 }
+
 
 .form__input-container_type_auth {
   flex-direction: column;
   gap: 5px;
+}
+
+.form__error {
+  text-align: center;
+  min-height: 15px;
+  font-size: 13px;
+  color: #FF004C;
+  margin: 0 0 20px;
 }
 
 @media screen and (max-width: 768px) {
@@ -63,6 +73,11 @@
 
   .form_type_auth {
     padding-top: 231px;
+  }
+
+  .form__error {
+    font-size: 11px;
+    margin-bottom: 10px;
   }
 }
 
@@ -86,5 +101,9 @@
 
   .form__title-info_type_auth {
     align-items: center;
+  }
+
+  .form__error {
+    font-size: 10px;
   }
 }

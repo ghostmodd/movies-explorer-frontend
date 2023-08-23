@@ -3,9 +3,8 @@ import './Footer.css';
 
 function Footer(props) {
   return (
-    <footer className='footer'>
-      <p className='footer__description'>{props.description}</p>
-      <div className="divide-line"></div>
+    <footer className={`footer footer_place_${props.place}`}>
+      <h2 className='footer__description'>{props.description}</h2>
       <div className="footer__copyright">
         <p className="footer__current-year">© {new Date().getFullYear()}</p>
         <div className="footer__copyright-links">

@@ -4,7 +4,7 @@ import Section from "../Section/Section";
 
 function Techs() {
   return (
-    <Section heading="Технологии" backgroundColor="#272727">
+    <Section heading="Технологии" backgroundColor="gray">
       <article className="techs">
         <h3 className="techs__heading">7 технологий</h3>
         <p className="techs__text">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>

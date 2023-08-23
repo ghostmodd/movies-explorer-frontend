@@ -3,10 +3,11 @@ import './Section.css';
 
 function Section(props) {
   return (
-    <section className="section" id={props.id ? props.id : ""} style={{ backgroundColor: props.backgroundColor }}>
-      <h2 className="section__heading">{props.heading}</h2>
-      <div className="divider"></div>
-      {props.children}
+    <section className={`section section_color_${props.backgroundColor}`} id={props.id ? props.id : ""}>
+      <div className="section__container">
+        <h2 className="section__heading">{props.heading}</h2>
+        {props.children}
+      </div>
     </section>
   )
 }

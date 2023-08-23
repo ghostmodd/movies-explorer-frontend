@@ -41,6 +41,10 @@
   margin-left: 52px;
 }
 
+.search-form:has(.search-form__query-input:focus) {
+  border-bottom: 1px solid #4285F4;
+}
+
 .search-form__query-input::placeholder {
   font-size: 18px;
   height: 20px;
@@ -71,8 +75,7 @@
   display: flex;
   gap: 15px;
   width: 16%;
-  border: none;
-  padding: 0 20px 0 30px;
+  margin: 0 20px 0 30px;
 }
 
 .search-form__invisible-checkbox {
@@ -95,7 +98,11 @@
   margin: 0;
 }
 
-.search-form__invisible-checkbox:checked+.search-form__short-film-checkbox {
+.search-form__invisible-checkbox:focus + .search-form__short-film-checkbox {
+  outline: 1px solid #4285F4;
+}
+
+.search-form__invisible-checkbox:checked + .search-form__short-film-checkbox {
   background-image: url("../../images/small-tumbler__checked.svg");
   border: none;
 }
@@ -121,7 +128,7 @@
   }
 
   .search-form__query-details-container {
-    padding-left: 19px;
+    margin-left: 19px;
   }
 }
 

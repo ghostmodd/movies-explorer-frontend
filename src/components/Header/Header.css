@@ -1,9 +1,13 @@
-.header {
-  width: 100%;
+.header_color_black {
+  background-color: #202020;
+}
+
+.header_color_blue {
   background-color: #073042;
 }
 
 .header__container {
+  max-width: 1140px;
   width: 89%;
   display: flex;
   align-items: center;
@@ -12,9 +16,8 @@
   padding: 18px 0;
 }
 
-.header__children {
-  display: flex;
-  justify-content: space-between;
+.header__container_place_main {
+  max-width: 1280px;
 }
 
 .header__btn-show-navigation {

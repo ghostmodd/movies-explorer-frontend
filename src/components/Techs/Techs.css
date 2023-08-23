@@ -29,7 +29,6 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, 84px);
-  grid-template-rows: repeat(auto-fit, 56px);
   justify-content: center;
   gap: 10px;
   padding: 0;
@@ -37,7 +36,11 @@
 }
 
 .tag-list__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 84px;
+  min-height: 54px;
   box-sizing: border-box;
   list-style: none;
   text-align: center;
@@ -45,6 +48,7 @@
   padding: 21px 0;
   background-color: #303030;
   border-radius: 10px;
+  word-wrap: anywhere;
 }
 
 @media screen and (max-width: 768px) {

@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 110px;
-  padding: 70px 0 132px;
+  padding: 70px 0 100px;
 }
 
 .two-columns {
@@ -39,13 +39,12 @@
 
 .timeline {
   width: 100%;
-  height: 35px;
   display: flex;
-  background-color: #303030;
 }
 
 .timeline__segment {
-  position: relative;
+  width: 100%;
+  min-height: 35px;
 }
 
 .timeline__segment_type_backend {
@@ -53,27 +52,35 @@
   height: 100%;
 }
 
-.timeline__segment_color_lime {
-  background-color: #3DDC84;
-}
-
 .timeline__segment_type_frontend {
   width: 80%;
   height: 100%;
 }
 
-.timeline__segment-text {
+.timeline__metric {
+  margin-bottom: 15px;
+}
+
+.timeline__metric_color_gray {
+  background-color: #303030;
+}
+
+.timeline__metric_color_lime {
+  background-color: #3DDC84;
+}
+
+.timeline__metric-text {
   font-size: 14px;
   text-align: center;
   padding: 9px 14px;
   margin: 0;
 }
 
-.timeline__segment-text_color_black {
+.timeline__metric-text_color_black {
   color: black;
 }
 
-.timeline__segment-text_color_white {
+.timeline__metric-text_color_white {
   color: white;
 }
 
@@ -82,8 +89,6 @@
   text-align: center;
   font-size: 14px;
   line-height: 17px;
-  position: absolute;
-  bottom: -31px;
   color: #8B8B8B;
   margin: 0;
 }
@@ -91,7 +96,7 @@
 @media screen and (max-width: 768px) {
   .about-project {
     gap: 93px;
-    padding-bottom: 121px;
+    padding-bottom: 89px;
   }
 
   .two-columns__heading {
@@ -103,13 +108,13 @@
     line-height: 18px;
   }
 
-  .timeline__segment-text {
+  .timeline__metric-text {
     padding: 9px 0;
   }
 }
 
-@media screen and (max-width: 500px) {
-  .timeline__segment-text {
+@media screen and (max-width: 550px) {
+  .timeline__metric-text {
     font-size: 11px;
   }
 
@@ -119,18 +124,18 @@
   }
 
   .timeline__segment_type_backend {
-    width: 35%;
+    width: 38%;
   }
 
   .timeline__segment_type_frontend {
-    width: 65%;
+    width: 62%;
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 350px) {
   .about-project {
     gap: 60px;
-    padding: 60px 0 94px;
+    padding: 60px 0 68px;
   }
 
   .two-columns__heading {
@@ -152,13 +157,16 @@
     width: 65%;
   }
 
-  .timeline__segment-text {
+  .timeline__metric {
+    margin-bottom: 8px;
+  }
+
+  .timeline__metric-text {
     font-size: 11px;
     padding: 11px 10px;
   }
 
   .timeline__segment-caption {
     font-size: 11px;
-    bottom: -27px;
   }
 }

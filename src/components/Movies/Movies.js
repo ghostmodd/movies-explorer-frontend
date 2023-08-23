@@ -8,16 +8,16 @@ import Footer from "../Footer/Footer";
 function Movies(props) {
   return (
     <>
-      <Header backgroundColor={"inherit"} >
+      <Header place="movies" backgroundColor="black" >
         <Navigation isLogged={true} place="header" openBurgerMenu={props.openBurgerMenu} />
       </Header>
 
       <main className="main">
         <SearchForm />
-        <MoviesCardList movies={props.moviesList} place="moviesList" />
+        <MoviesCardList movies={props.moviesList} place="movies-list" />
       </main>
 
-      <Footer description='Учебный проект Яндекс.Практикум х BeatFilm.' />
+      <Footer place="movies" description='Учебный проект Яндекс.Практикум х BeatFilm.' />
     </>
   )
 }

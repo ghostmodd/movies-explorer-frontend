@@ -1,7 +1,16 @@
 .movies-card-list {
+  max-width: 1144px;
   display: flex;
   flex-direction: column;
+  margin: 0 auto 94px;
+}
+
+.movies-card-list_place_movies-list {
   margin-bottom: 94px;
+}
+
+.movies-card-list_place_saved-movies {
+  margin-bottom: 184px;
 }
 
 .movies-card-list__gallery {
@@ -22,6 +31,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .movies-card-list_place_saved-movies {
+    margin-bottom: 105px;
+  }
+
   .movies-card-list__gallery {
     grid-template-columns: repeat(auto-fit, minmax(310px, 342px));
     gap: 25px 32px;
@@ -30,6 +43,10 @@
 }
 
 @media screen and (max-width: 350px) {
+  .movies-card-list_place_saved-movies {
+    margin-bottom: 109px;
+  }
+
   .movies-card-list__gallery {
     row-gap: 17px;
     grid-template-columns: repeat(auto-fit, 300px);

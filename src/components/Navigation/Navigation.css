@@ -2,13 +2,23 @@
   display: flex;
 }
 
-.navigation_place_header {
+.navigation_place_burger-menu {
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.navigation__menu {
+  display: flex;
+}
+
+.navigation__menu_place_header {
   width: 46vw;
   align-items: center;
   gap: 16px;
 }
 
-.navigation_place_burger-menu {
+.navigation__menu_place_burger-menu {
   flex-direction: column;
   align-items: center;
   gap: 29px;
@@ -53,6 +63,11 @@
 }
 
 .navigation__btn-account {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: white;
+  padding: 0;
   display: flex;
   align-items: center;
   gap: 17px;
@@ -60,7 +75,8 @@
 }
 
 .navigation__btn-account_place_burger-menu {
-  margin-bottom: 120px;
+  justify-content: center;
+  margin-bottom: 31px;
 }
 
 .navigation__btn-account-info {
@@ -74,7 +90,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .navigation_place_header {
+  .navigation__menu_place_header {
     display: none;
   }
 
@@ -93,17 +109,13 @@
     display: none;
   }
 
-  .navigation__btn-account_place_burger-menu {
-    margin-bottom: 92px;
-  }
-
   .navigation__btn-show-navigation {
     display: block;
   }
 }
 
 @media screen and (max-width: 320px) {
-  .navigation_place_burger-menu {
+  .navigation__menu_place_burger-menu {
     width: 300px;
     gap: 21px;
     padding-top: 146px;
@@ -118,7 +130,7 @@
   }
 
   .navigation__btn-account_place_burger-menu {
-    margin-bottom: 48px;
+    margin-bottom: 232px;
   }
 
   .navigation__btn-login {

@@ -8,16 +8,16 @@ import Footer from "../Footer/Footer";
 function SavedMovies(props) {
   return (
     <>
-      <Header backgroundColor={"inherit"} >
+      <Header place="saved-movies" backgroundColor="black" >
         <Navigation isLogged={true} place="header" openBurgerMenu={props.openBurgerMenu} />
       </Header>
 
       <main className="main">
         <SearchForm />
-        <MoviesCardList movies={props.savedMoviesList} place="savedMovies" />
+        <MoviesCardList movies={props.savedMoviesList} place="saved-movies" />
       </main>
 
-      <Footer description='Учебный проект Яндекс.Практикум х BeatFilm.' />
+      <Footer place="saved-movies" description='Учебный проект Яндекс.Практикум х BeatFilm.' />
     </>
   )
 }

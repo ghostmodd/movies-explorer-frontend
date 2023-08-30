@@ -12,8 +12,8 @@ function MoviesCard(props) {
 
   // Склонение слова "минута"
   function getMinutes() {
-    if (/1/.test(props.duration)) {
-      return "минуа";
+    if (props.duration === 1) {
+      return "минута";
     } else if (/^[2-4]$/.test(props.duration)) {
       return "минуты";
     } else if (/^[5-9]$/.test(props.duration)) {
@@ -45,13 +45,15 @@ function MoviesCard(props) {
   }
 
   return (
-    <a className="movies-card link" href={props.trailer} rel="noreferrer" target="_blank">
+    <div className="movies-card">
       <div className='movies-card__description'>
         <h3 className='movies-card__title'>{props.title}</h3>
         <p className='movies-card__caption'>{props.duration} {getMinutes()}</p>
       </div>
 
-      <img className='movies-card__image' src={props.image} alt={`Обложка фильма "${props.title}"`} />
+      <a className="link" href={props.trailer} rel="noreferrer" target="_blank">
+        <img className='movies-card__image' src={props.image} alt={`Обложка фильма "${props.title}"`} />
+      </a>
 
       {
         props.place === "movies-list"
@@ -70,7 +72,7 @@ function MoviesCard(props) {
           onClick={onDeleteMovie}>
         </button>
       }
-    </a>
+    </div>
   )
 }
 

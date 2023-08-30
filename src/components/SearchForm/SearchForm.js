@@ -20,8 +20,8 @@ function SearchForm(props) {
   }
 
   function validateSearchQuery(query) {
-    // @todo сделать проверку регуляркой
-    if (query.length === 0) {
+    // регулярное выражение, проверяющее наличие букв/цифр
+    if (!/[\d\wа-яА-Я]/.test(query)) {
       changeSearchError("Нужно ввести ключевое слово.");
       return false;
     } else {
@@ -56,7 +56,6 @@ function SearchForm(props) {
           <label htmlFor="short-films" className="search-form__label">Короткометражки</label>
         </fieldset>
       </form>
-      {/* @todo Подумать над размещением ошибки при низком разрешении */}
       <p className="search__error">{searchError}</p>
     </section>
   )

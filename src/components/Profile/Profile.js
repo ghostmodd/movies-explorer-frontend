@@ -3,62 +3,91 @@ import "./Profile.css";
 import Header from "../Header/Header";
 import Navigation from "../Navigation/Navigation";
 import Form from "../Form/Form";
-import { useNavigate } from "react-router-dom";
+import useInput from "../../utils/hooks/useInput";
+import { CurrentUserContext } from "../../utils/context/CurrentUserContext";
 
 function Profile(props) {
-  const navigate = useNavigate();
-  const [name, changeName] = React.useState(props.user.name);
-  const [email, changeEmail] = React.useState(props.user.email);
+  const userInfo = React.useContext(CurrentUserContext);
+
+  const [isSubmitButtonDisabled, toggleIsSubmitButtonDisabled] = React.useState(true);
+
   const [isEditable, toggleIsEditable] = React.useState(false);
-  const [formError, setFormError] = React.useState("");
+  const [nameInput, changeNameInput, handleNameInputFocus, nameInputHasError, nameInputError] = useInput(
+    userInfo.name,
+    {
+      type: "name",
+      required: false,
+      minLength: 2,
+      maxLength: 30,
+    }
+  );
+  const [emailInput, changeEmailInput, handleEmailInputFocus, emailInputHasError, emailInputError] = useInput(
+    userInfo.email,
+    {
+      type: "email",
+      required: false,
+    }
+  );
 
-  function onExitAccount() {
-    navigate("/");
-  }
+  React.useEffect(() => {
+    // Убирает ошибку после использования инпута
+    if (props.formError) {
+      props.setFormError("");
+    }
+  }, [nameInput, emailInput]);
 
+  // Управление кнопкой отправки формы
+  React.useEffect(() => {
+    if (props.formError || nameInputHasError || emailInputHasError || (nameInput === userInfo.name && emailInput === userInfo.email)) {
+      toggleIsSubmitButtonDisabled(true);
+    } else {
+      toggleIsSubmitButtonDisabled(false);
+    }
+  }, [isEditable, props.formError, nameInputHasError, emailInputHasError, nameInput, emailInput]);
+
+  // Управление кнопкой "Редактировать"
   function onEditButtonClick() {
     toggleIsEditable(true);
   }
 
-  function onInputChange(evt) {
-    if (evt.target.id === "inputName") {
-      changeName(evt.target.value);
-    } else if (evt.target.id === "inputEmail") {
-      changeEmail(evt.target.value);
-    }
+  function onEditProfile() {
+    props.onEditProfile({
+      name: nameInput,
+      email: emailInput,
+    });
   }
 
-  function onEditProfile() {
-    setFormError("При обновлении профиля произошла ошибка.");
+  function onExitAccount() {
+    props.onExitAccount();
   }
 
   return (
     <>
       <Header place="profile" backgroundColor="black">
-        <Navigation isLogged={true} place="header" openBurgerMenu={props.openBurgerMenu} />
+        <Navigation isLogged={props.loggedIn} place="header" openBurgerMenu={props.openBurgerMenu} />
       </Header>
 
       <main className="main">
-        <Form type="profile" logo={false} heading={`Привет, ${props.user.name}!`} onSubmit={() => { onEditProfile() }}>
+        <Form type="profile" logo={false} heading={`Привет, ${userInfo.name}!`} onSubmit={() => { onEditProfile() }}>
           <fieldset className="edit-profile fieldset">
             <div className="form__input-container form__input-container_type_profile">
               <label className="edit-profile__input-label" htmlFor="inputName">Имя</label>
               <input className="edit-profile__input input" type="text" id="inputName"
-                placeholder="Введите имя" value={name} disabled={!isEditable} onChange={isEditable ? onInputChange : () => {}} />
+                placeholder="Введите имя" value={nameInput} disabled={!isEditable} onChange={isEditable ? changeNameInput : () => { }} onFocus={handleNameInputFocus} />
             </div>
 
             <div className="form__input-container form__input-container_type_profile">
               <label className="edit-profile__input-label" htmlFor="inputEmail">E-mail</label>
               <input className="edit-profile__input input" type="email" id="inputEmail"
-                placeholder="Введите электронную почту" value={email} disabled={!isEditable} onChange={isEditable ? onInputChange : () => {}} />
+                placeholder="Введите электронную почту" value={emailInput} disabled={!isEditable} onChange={isEditable ? changeEmailInput : null} onFocus={handleEmailInputFocus} />
             </div>
 
             {
               isEditable
               &&
               <div className="edit-profile__toolbar">
-                <p className="form__error">{formError}</p>
-                <button className={`edit-profile__btn-submit ${formError.length > 0 ? "edit-profile__btn-submit_disabled" : ""} button`} disabled={formError.length > 0}>Сохранить</button>
+                <p className="form__error">{props.formError}</p>
+                <button className={`edit-profile__btn-submit ${isSubmitButtonDisabled ? "edit-profile__btn-submit_disabled" : ""} button`} disabled={isSubmitButtonDisabled}>Сохранить</button>
               </div>
             }
 

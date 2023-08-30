@@ -8,13 +8,13 @@ import Footer from "../Footer/Footer";
 function Movies(props) {
   return (
     <>
-      <Header place="movies" backgroundColor="black" >
-        <Navigation isLogged={true} place="header" openBurgerMenu={props.openBurgerMenu} />
+      <Header place="movies" backgroundColor="black">
+        <Navigation isLogged={props.loggedIn} place="header" openBurgerMenu={props.openBurgerMenu} />
       </Header>
 
       <main className="main">
-        <SearchForm />
-        <MoviesCardList movies={props.moviesList} place="movies-list" />
+        <SearchForm onSearch={props.onSearch} searchQuery={props.searchQuery} setSearchQuery={props.setSearchQuery} setIsSearching={props.setIsSearching} />
+        <MoviesCardList place="movies-list" movies={props.movies} isSearching={props.isSearching} searchError={props.searchError} setSearchError={props.setSearchError} onSaveMovie={props.onSaveMovie} checkIsCardSaved={props.checkIsCardSaved} onDeleteMovie={props.onDeleteMovie} />
       </main>
 
       <Footer place="movies" description='Учебный проект Яндекс.Практикум х BeatFilm.' />

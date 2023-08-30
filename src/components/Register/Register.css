@@ -29,6 +29,7 @@
 }
 
 .authentication__input-error {
+  min-height: 15px;
   font-size: 10px;
   color: #EE3465;
   margin: 0;
@@ -69,6 +70,7 @@
 .authentication__btn-change-approach-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 6px;
 }
 

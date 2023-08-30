@@ -8,11 +8,11 @@ import AboutMe from "../AboutMe/AboutMe";
 import Portfolio from "../Portfolio/Portfolio";
 import Footer from "../Footer/Footer";
 
-function Main() {
+function Main(props) {
   return (
     <>
       <Header place="main" backgroundColor="blue" >
-        <Navigation isLogged={false} place="header" />
+        <Navigation isLogged={props.loggedIn} place="header" openBurgerMenu={props.openBurgerMenu} />
       </Header>
 
       <main className="main">

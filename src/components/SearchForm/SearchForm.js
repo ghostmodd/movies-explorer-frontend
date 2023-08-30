@@ -2,30 +2,62 @@ import React from "react";
 import "./SearchForm.css";
 import searchFormIcon from "../../images/search-form__icon.svg";
 
-function SearchForm() {
-  const [searchShortFilms, toggleSearchShortFilms] = React.useState(true);
+function SearchForm(props) {
+  const [searchError, changeSearchError] = React.useState("");
 
   function onCheckboxChecked() {
-    toggleSearchShortFilms(!searchShortFilms);
+    props.setSearchQuery({
+      ...props.searchQuery,
+      isSearchingShortMovies: !props.searchQuery.isSearchingShortMovies,
+    })
+  }
+
+  function onSearchInputChange(evt) {
+    props.setSearchQuery({
+      ...props.searchQuery,
+      query: evt.target.value,
+    })
+  }
+
+  function validateSearchQuery(query) {
+    // @todo сделать проверку регуляркой
+    if (query.length === 0) {
+      changeSearchError("Нужно ввести ключевое слово.");
+      return false;
+    } else {
+      changeSearchError("");
+      return true;
+    }
+  }
+
+  function onSearch(evt) {
+    evt.preventDefault();
+
+    if (validateSearchQuery(props.searchQuery.query)) {
+      props.setIsSearching(true);
+      props.onSearch();
+    }
   }
 
   return (
     <section className="search">
-      <form className="search-form">
+      <form className="search-form" onSubmit={onSearch}>
         <fieldset className="search-form__query-input-container">
-          <input type="text" className="search-form__query-input" placeholder="Фильм" />
+          <input type="text" className="search-form__query-input" placeholder="Фильм" value={props.searchQuery.query} onChange={onSearchInputChange} />
           <img className="search-form__icon" src={searchFormIcon} alt="Поиск по фильмам" />
           <button className="search-form__btn-search button"></button>
         </fieldset>
 
         <fieldset className="search-form__query-details-container fieldset">
           <input className="search-form__invisible-checkbox" tabIndex="0" id="short-films" type="checkbox"
-            checked={searchShortFilms} onChange={() => {
+            checked={props.searchQuery.isSearchingShortMovies} onChange={() => {
             }} />
           <span className="search-form__short-film-checkbox" onClick={onCheckboxChecked}></span>
           <label htmlFor="short-films" className="search-form__label">Короткометражки</label>
         </fieldset>
       </form>
+      {/* @todo Подумать над размещением ошибки при низком разрешении */}
+      <p className="search__error">{searchError}</p>
     </section>
   )
 }

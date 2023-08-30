@@ -30,6 +30,19 @@
   margin: 0 auto;
 }
 
+.movies-card-list__error-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.movies-card-list__error {
+  max-width: 600px;
+  text-align: center;
+  margin: 0;
+  color: #EE3465;
+}
+
 @media screen and (max-width: 768px) {
   .movies-card-list_place_saved-movies {
     margin-bottom: 105px;

@@ -9,12 +9,12 @@ function SavedMovies(props) {
   return (
     <>
       <Header place="saved-movies" backgroundColor="black" >
-        <Navigation isLogged={true} place="header" openBurgerMenu={props.openBurgerMenu} />
+        <Navigation isLogged={props.loggedIn} place="header" openBurgerMenu={props.openBurgerMenu} />
       </Header>
 
       <main className="main">
-        <SearchForm />
-        <MoviesCardList movies={props.savedMoviesList} place="saved-movies" />
+        <SearchForm searchQuery={props.searchQuery} setSearchQuery={props.setSearchQuery} setIsSearching={props.setIsSearching} onSearch={props.onSearch} />
+        <MoviesCardList movies={props.movies} place="saved-movies" isSearching={props.isSearching} setSearchError={props.setSearchError} searchError={props.searchError} onDeleteMovie={props.onDeleteMovie} />
       </main>
 
       <Footer place="saved-movies" description='Учебный проект Яндекс.Практикум х BeatFilm.' />

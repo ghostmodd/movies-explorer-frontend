@@ -13,10 +13,6 @@
   border-radius: 6px;
 }
 
-.movies-card_deleted {
-  display: none;
-}
-
 .movies-card__description {
   width: 90%;
   display: flex;

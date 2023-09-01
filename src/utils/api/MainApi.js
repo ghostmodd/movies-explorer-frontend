@@ -117,7 +117,7 @@ class MainApi {
   }
 }
 
-const mainApi = new MainApi("http://localhost:3001", {
+const mainApi = new MainApi("https://api.ghostmodd.nomoreparties.co", {
   "Content-Type": "application/json",
   "Access-Control-Expose-Headers": "Set-Cookie",
   "Access-Control-Allow-Credentials": "true",

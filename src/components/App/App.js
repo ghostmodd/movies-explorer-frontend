@@ -103,6 +103,7 @@ function App() {
   function handleRegister(registrationParams = {}) {
     mainApi.register(registrationParams)
       .then(() => {
+        toggleIsLogged(true);
         navigate("/movies");
       })
       .catch((err) => {

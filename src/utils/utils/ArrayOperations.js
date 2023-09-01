@@ -1,3 +1,4 @@
+// Функция удаляет объект из массива данных
 function getArrayWithoutObject(array, object) {
   const newState = array.slice(0, array.length);
 

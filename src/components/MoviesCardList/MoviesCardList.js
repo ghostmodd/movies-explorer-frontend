@@ -3,7 +3,7 @@ import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
 import useMediaQuery from "../../utils/hooks/useMediaQuery";
-import { GalleryConfig } from "../../utils/constants/constants";
+import {GalleryConfig} from "../../utils/constants/constants";
 
 function MoviesCardList(props) {
   const [moviesCardCount, setMoviesCardCount] = React.useState(0);
@@ -18,47 +18,54 @@ function MoviesCardList(props) {
   // В зависимости от открытой страницы, карточки будут отрисованы по-разному
   // Функция нужна для устранения конфликта между двумя API
   function renderCards() {
-    if (props.place === "movies-list") {
-      return props.movies.map((item, index) => {
-        if (index <= moviesCardCount - 1) {
+    if (props.movies) {
+      if (props.place === "movies-list") {
+        return props.movies.map((item, index) => {
+          if (index <= moviesCardCount - 1) {
+            return (
+                <MoviesCard place={props.place} title={item.nameRU} duration={item.duration}
+                            image={'https://api.nomoreparties.co/' + item.image.url}
+                            key={item.id} id={item.id} type={props.type} movieData={item} onSaveMovie={props.onSaveMovie}
+                            onDeleteMovie={props.onDeleteMovie} checkIsCardSaved={props.checkIsCardSaved}
+                            trailer={item.trailerLink}/>
+            )
+          }
+        })
+      } else if (props.place === "saved-movies") {
+        return props.movies.map((item, index) => {
           return (
-            <MoviesCard place={props.place} title={item.nameRU} duration={item.duration}
-              image={'https://api.nomoreparties.co/' + item.image.url}
-              key={item.id} id={item.id} type={props.type} movieData={item} onSaveMovie={props.onSaveMovie}
-              onDeleteMovie={props.onDeleteMovie} checkIsCardSaved={props.checkIsCardSaved} trailer={item.trailerLink} />
+              <MoviesCard place={props.place} title={item.nameRU} duration={item.duration}
+                          image={item.image}
+                          key={item.movieId} id={item.id} type={props.type} movieData={item}
+                          onSaveMovie={props.onSaveMovie} onDeleteMovie={props.onDeleteMovie} trailer={item.trailerLink}/>
           )
-        }
-      })
-    } else if (props.place === "saved-movies") {
-      return props.movies.map((item, index) => {
-        if (index <= moviesCardCount - 1) {
-          return (
-            <MoviesCard place={props.place} title={item.nameRU} duration={item.duration}
-              image={item.image}
-              key={item.movieId} id={item.id} type={props.type} movieData={item}
-              onSaveMovie={props.onSaveMovie} onDeleteMovie={props.onDeleteMovie} trailer={item.trailerLink} />
-          )
-        }
-      })
+        })
+      }
     }
   }
 
   // Функция вычисляет количество размещаемых карточек на странице
   // Формула: (ширина галереи - отступы) / ширину карточки * количество столбцов
-  function calculateCardCount(additionalRows = 0) {
+  function calculateCardCount(showingMore = false) {
     if (gallery.current) {
       const cardWidth = GalleryConfig[`${deviceType}CardWidth`];
-      const galleryRows = GalleryConfig[`${deviceType}Rows`];
 
       // raw переменные нужны для рассчета отступов
       const rawGalleryWidth = gallery.current.offsetWidth;
       const rawColumnRows = Math.abs(rawGalleryWidth / cardWidth);
       const galleryWidth = rawGalleryWidth - (GalleryConfig[`${deviceType}Gap`] * (rawColumnRows - 1));
+      const cardsInRow = Math.floor(galleryWidth / cardWidth);
 
-      if (!additionalRows) {
-        return Math.floor(galleryWidth / cardWidth) * galleryRows;
+      if (!showingMore) {
+        if(cardsInRow === 3) {
+          return 12
+        } else if(cardsInRow === 2) {
+          return 8;
+        } else if (cardsInRow === 1) {
+          return 5
+        }
       } else {
-        return moviesCardCount + (Math.floor(galleryWidth / cardWidth) * additionalRows);
+        return moviesCardCount + cardsInRow;
       }
     }
   }
@@ -80,7 +87,7 @@ function MoviesCardList(props) {
   // Функция повышает число доступных для отображения карт...
   // ...в следствие этого происходит перерисовка галереи
   function handleShowMoreCards() {
-    setMoviesCardCount(calculateCardCount(GalleryConfig[`${deviceType}AdditionalRows`]));
+    setMoviesCardCount(calculateCardCount(true));
   }
 
   return (
@@ -98,7 +105,7 @@ function MoviesCardList(props) {
         &&
         <div className="movies-card-list__gallery" ref={gallery}>
           {renderCards()}
-          {props.isSearching && <Preloader />}
+          {props.isSearching && <Preloader/>}
         </div>
       }
 

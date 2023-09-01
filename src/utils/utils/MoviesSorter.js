@@ -1,8 +1,11 @@
 // функция сортировки фильмов
-function sortMovies(movies, queryString, isSearchingShortMovies) {
+function handleSortMovies(movies, queryString, isSearchingShortMovies) {
   // манипуляции с запросом: удаление пробелов и приведение к нижнему регистру
-  const queryRegexp = /^\s+|\s(?=\s)|\s+$/g;
-  const query = queryString.replace(queryRegexp, "").toLowerCase();
+  let query;
+  if(queryString) {
+    const queryRegexp = /^\s+|\s(?=\s)|\s+$/g;
+    query = queryString.replace(queryRegexp, "").toLowerCase();
+  }
 
   function _checkIfProperName(movieItem) {
     return movieItem.nameRU.toLowerCase().includes(query) || movieItem.nameEN.toLowerCase().includes(query);
@@ -17,8 +20,14 @@ function sortMovies(movies, queryString, isSearchingShortMovies) {
   }
 
   return movies.filter((movieItem) => {
-    return _checkIfProperName(movieItem) && _checkIfShortMovies(movieItem);
+    if (queryString && isSearchingShortMovies) {
+      return _checkIfProperName(movieItem) && _checkIfShortMovies(movieItem);
+    } else if (!queryString) {
+      return _checkIfShortMovies(movieItem);
+    } else if (!isSearchingShortMovies) {
+      return _checkIfProperName(movieItem);
+    }
   });
 }
 
-export default sortMovies;
+export default handleSortMovies;

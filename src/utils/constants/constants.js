@@ -1,9 +1,6 @@
 const GalleryConfig = {
-  desktopRows: 4,
   desktopAdditionalRows: 1,
-  tabletRows: 4,
   tabletAdditionalRows: 1,
-  mobileRows: 5,
   mobileAdditionalRows: 2,
   desktopGap: 28,
   tabletGap: 25,

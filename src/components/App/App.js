@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import {Routes, Route, useNavigate} from "react-router-dom";
 import ProtectedRouteElement from "../ProtectedRouteElement/ProtectedRouteElement";
 import './App.css'
 import Main from "../Main/Main";
@@ -12,9 +12,10 @@ import BurgerMenuPopup from "../BurgerMenuPopup/BurgerMenuPopup";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import moviesApi from "../../utils/api/MoviesApi";
 import mainApi from "../../utils/api/MainApi";
-import sortMovies from "../../utils/utils/MoviesSorter";
 import useLocalStorage from "../../utils/hooks/useLocalStorage";
-import { CurrentUserContext } from "../../utils/context/CurrentUserContext";
+import {CurrentUserContext} from "../../utils/context/CurrentUserContext";
+import {getArrayWithoutObject} from "../../utils/utils/ArrayOperations";
+import handleSortMovies from "../../utils/utils/MoviesSorter";
 
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
     "searchMoviesQuery",
     {
       query: "",
-      isSearchingShortMovies: true,
+      isSearchingShortMovies: false,
     }
   );
   const [searchMoviesError, setSearchMoviesError] = useLocalStorage("searchMoviesError", "");
@@ -44,7 +45,7 @@ function App() {
     "searchSavedMoviesQuery",
     {
       query: "",
-      isSearchingShortMovies: true,
+      isSearchingShortMovies: false,
     }
   );
   const [searchSavedMoviesError, setSearchSavedMoviesError] = useLocalStorage("searchSavedMoviesError", "");
@@ -59,6 +60,7 @@ function App() {
   const [registerFormError, setRegisterFormError] = React.useState("");
   const [loginFormError, setLoginFormError] = React.useState("");
   const [profileFormError, setProfileFormError] = React.useState("");
+  const [profileNotification, setProfileNotification] = React.useState("");
 
 
   React.useEffect(() => {
@@ -73,7 +75,7 @@ function App() {
           });
           toggleIsLogged(true);
         })
-        .catch((err) => {
+        .catch(() => {
           console.log("Вы не авторизованы.");
         });
     }
@@ -116,7 +118,9 @@ function App() {
     mainApi.login(loginParams)
       .then(() => {
         toggleIsLogged(true);
-        navigate("/movies", { replace: true })
+      })
+      .then(() => {
+        navigate("/movies", {replace: true})
       })
       .catch((err) => {
         if (err === 401) {
@@ -148,6 +152,9 @@ function App() {
           email: res.email,
         })
       })
+      .then(() => {
+        setProfileNotification("Данные успешно сохранены!");
+      })
       .catch((err) => {
         if (err === 409) {
           setProfileFormError("Пользователь с таким email уже существует.");
@@ -171,10 +178,10 @@ function App() {
     return moviesArray;
   }
 
-  async function handleSearchMovies() {
+  async function handleSearchMovies(isSearchingShortMovies = null) {
     setSearchMoviesError("");
     try {
-      const sortedMovies = sortMovies(await getMovies(), searchMoviesQuery.query, searchMoviesQuery.isSearchingShortMovies);
+      const sortedMovies = handleSortMovies(await getMovies(), searchMoviesQuery.query, isSearchingShortMovies === null ? searchMoviesQuery.isSearchingShortMovies : isSearchingShortMovies);
       setMoviesSearchResult(sortedMovies);
       setIsSearching(false);
       if (sortedMovies.length === 0) {
@@ -192,10 +199,10 @@ function App() {
       })
   }
 
-  function handleSearchSavedMovies() {
+  function handleSearchSavedMovies(isSearchingShortMovies = null) {
     setSearchSavedMoviesError("");
     try {
-      const sortedMovies = sortMovies(savedMovies, searchSavedMoviesQuery.query, searchSavedMoviesQuery.isSearchingShortMovies);
+      const sortedMovies = handleSortMovies(savedMovies, searchSavedMoviesQuery.query, isSearchingShortMovies === null ? searchMoviesQuery.isSearchingShortMovies : isSearchingShortMovies);
       setSavedMoviesSearchResult(sortedMovies);
       setIsSearching(false);
       if (sortedMovies.length === 0) {
@@ -207,17 +214,17 @@ function App() {
   }
 
   function handleSaveMovie({
-    nameRU,
-    nameEN,
-    image,
-    description,
-    director,
-    country,
-    duration,
-    trailerLink,
-    year,
-    id,
-  }) {
+                             nameRU,
+                             nameEN,
+                             image,
+                             description,
+                             director,
+                             country,
+                             duration,
+                             trailerLink,
+                             year,
+                             id,
+                           }) {
     const imageUrl = "https://api.nomoreparties.co/" + image.url;
     mainApi.saveMovie({
       nameRU,
@@ -264,14 +271,14 @@ function App() {
   }
 
   function handleDeleteMovie(rawMovieId) {
-    if (savedMoviesSearchResult) {
-      handleSearchSavedMovies();
-    }
-
     const movieId = getCorrectMovieId(rawMovieId);
+    const card = savedMovies.filter((item) => {
+      return item._id === movieId;
+    });
+
     mainApi.deleteMovie(movieId)
       .then(() => {
-        getSavedMovies();
+        setSavedMovies(getArrayWithoutObject(savedMovies, card));
       })
       .catch((err) => {
         console.log(err);
@@ -282,52 +289,57 @@ function App() {
     <CurrentUserContext.Provider value={userInfo}>
       <div className='app'>
         <Routes>
-          <Route path="/" element={<Main loggedIn={isLogged} openBurgerMenu={handleOpenBurgerMenu} />} />
+          <Route path="/" element={<Main loggedIn={isLogged} openBurgerMenu={handleOpenBurgerMenu}/>}/>
 
           <Route path="/movies"
-            element={<ProtectedRouteElement element={Movies} loggedIn={isLogged} movies={moviesSearchResult}
-              onSearch={handleSearchMovies}
-              searchQuery={searchMoviesQuery}
-              setSearchQuery={setSearchMoviesQuery}
-              setIsSearching={setIsSearching}
-              searchError={searchMoviesError}
-              onSaveMovie={handleSaveMovie}
-              onDeleteMovie={handleDeleteMovie}
-              isSearching={isSearching}
-              openBurgerMenu={handleOpenBurgerMenu}
-              checkIsCardSaved={checkIsCardSaved}
-            />}
+                 element={<ProtectedRouteElement element={Movies} loggedIn={isLogged} movies={moviesSearchResult}
+                                                 onSearch={handleSearchMovies}
+                                                 searchQuery={searchMoviesQuery}
+                                                 setSearchQuery={setSearchMoviesQuery}
+                                                 setIsSearching={setIsSearching}
+                                                 searchError={searchMoviesError}
+                                                 onSaveMovie={handleSaveMovie}
+                                                 onDeleteMovie={handleDeleteMovie}
+                                                 isSearching={isSearching}
+                                                 openBurgerMenu={handleOpenBurgerMenu}
+                                                 checkIsCardSaved={checkIsCardSaved}
+                 />}
           />
 
           <Route path="/saved-movies"
-            element={<ProtectedRouteElement
-              element={SavedMovies} loggedIn={isLogged} movies={savedMoviesSearchResult.length === 0 ? savedMovies : savedMoviesSearchResult}
-              onSearch={handleSearchSavedMovies}
-              searchQuery={searchSavedMoviesQuery}
-              setSearchQuery={setSearchSavedMoviesQuery}
-              setIsSearching={setIsSearching}
-              searchError={searchSavedMoviesError}
-              onDeleteMovie={handleDeleteMovie}
-              openBurgerMenu={handleOpenBurgerMenu}
-            />}
+                 element={<ProtectedRouteElement
+                   element={SavedMovies} loggedIn={isLogged}
+                   movies={savedMoviesSearchResult.length === 0 ? savedMovies : savedMoviesSearchResult}
+                   onSearch={handleSearchSavedMovies}
+                   searchQuery={searchSavedMoviesQuery}
+                   setSearchQuery={setSearchSavedMoviesQuery}
+                   setIsSearching={setIsSearching}
+                   searchError={searchSavedMoviesError}
+                   onDeleteMovie={handleDeleteMovie}
+                   openBurgerMenu={handleOpenBurgerMenu}
+                 />}
           />
 
           <Route path="/profile"
-            element={<ProtectedRouteElement element={Profile} loggedIn={isLogged} formError={profileFormError}
-              setFormError={setProfileFormError} onEditProfile={handleEditProfile}
-              onExitAccount={handleExitAccount}
-              openBurgerMenu={handleOpenBurgerMenu}
-            />}
+                 element={<ProtectedRouteElement element={Profile} loggedIn={isLogged} formError={profileFormError}
+                                                 setFormError={setProfileFormError} notification={profileNotification}
+                                                 setNotification={setProfileNotification}
+                                                 onEditProfile={handleEditProfile}
+                                                 onExitAccount={handleExitAccount}
+                                                 openBurgerMenu={handleOpenBurgerMenu}
+                 />}
           />
 
-          <Route path="/signup" element={<Register onRegister={handleRegister} formError={registerFormError} setFormError={setRegisterFormError} />} />
+          <Route path="/signup" element={<Register onRegister={handleRegister} formError={registerFormError}
+                                                   setFormError={setRegisterFormError}/>}/>
 
-          <Route path="/signin" element={<Login onLogin={handleLogin} formError={loginFormError} setFormError={setLoginFormError} />} />
+          <Route path="/signin"
+                 element={<Login onLogin={handleLogin} formError={loginFormError} setFormError={setLoginFormError}/>}/>
 
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
 
-        <BurgerMenuPopup isOpened={popupStatus.burgerMenu} onClose={handleCloseAllPopups} />
+        <BurgerMenuPopup isOpened={popupStatus.burgerMenu} onClose={handleCloseAllPopups}/>
       </div>
     </CurrentUserContext.Provider>
   );

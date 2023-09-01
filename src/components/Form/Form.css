@@ -66,6 +66,14 @@
   margin: 0 0 20px;
 }
 
+.form__notification {
+  text-align: center;
+  min-height: 15px;
+  font-size: 13px;
+  color: #3DDC84;
+  margin: 0 0 20px;
+}
+
 @media screen and (max-width: 768px) {
   .form_type_profile {
     margin-top: 229px;

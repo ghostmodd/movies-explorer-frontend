@@ -30,6 +30,14 @@ function Profile(props) {
   );
 
   React.useEffect(() => {
+    if(props.formError) {
+      props.setFormError("");
+    } else if(props.notification) {
+      props.setNotification("");
+    }
+  }, []);
+
+  React.useEffect(() => {
     // Убирает ошибку после использования инпута
     if (props.formError) {
       props.setFormError("");
@@ -55,6 +63,10 @@ function Profile(props) {
       name: nameInput,
       email: emailInput,
     });
+    toggleIsSubmitButtonDisabled(true);
+    setTimeout(() => {
+      toggleIsEditable(false);
+    }, 1000);
   }
 
   function onExitAccount() {
@@ -86,7 +98,7 @@ function Profile(props) {
               isEditable
               &&
               <div className="edit-profile__toolbar">
-                <p className="form__error">{props.formError}</p>
+                <p className={props.formError ? "form__error" : "form__notification"}>{props.formError || props.notification}</p>
                 <button className={`edit-profile__btn-submit ${isSubmitButtonDisabled ? "edit-profile__btn-submit_disabled" : ""} button`} disabled={isSubmitButtonDisabled}>Сохранить</button>
               </div>
             }

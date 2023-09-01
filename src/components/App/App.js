@@ -103,7 +103,7 @@ function App() {
   function handleRegister(registrationParams = {}) {
     mainApi.register(registrationParams)
       .then(() => {
-        navigate("/signin");
+        navigate("/movies");
       })
       .catch((err) => {
         if (err === 409) {

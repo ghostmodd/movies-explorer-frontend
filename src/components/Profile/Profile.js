@@ -66,6 +66,7 @@ function Profile(props) {
     toggleIsSubmitButtonDisabled(true);
     setTimeout(() => {
       toggleIsEditable(false);
+      props.setNotification("");
     }, 1000);
   }
 

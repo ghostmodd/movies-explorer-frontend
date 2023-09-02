@@ -13,7 +13,7 @@ function SavedMovies(props) {
       </Header>
 
       <main className="main">
-        <SearchForm searchQuery={props.searchQuery} setSearchQuery={props.setSearchQuery} setIsSearching={props.setIsSearching} onSearch={props.onSearch} />
+        <SearchForm searchQuery={props.searchQuery} setSearchQuery={props.setSearchQuery} setIsSearching={props.setIsSearching} onSearch={props.onSearch} results={props.movies.length > 0} />
         <MoviesCardList movies={props.movies} place="saved-movies" isSearching={props.isSearching} setSearchError={props.setSearchError} searchError={props.searchError} onDeleteMovie={props.onDeleteMovie} />
       </main>
 

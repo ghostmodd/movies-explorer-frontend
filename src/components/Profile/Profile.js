@@ -30,9 +30,9 @@ function Profile(props) {
   );
 
   React.useEffect(() => {
-    if(props.formError) {
+    if (props.formError) {
       props.setFormError("");
-    } else if(props.notification) {
+    } else if (props.notification) {
       props.setNotification("");
     }
   }, []);

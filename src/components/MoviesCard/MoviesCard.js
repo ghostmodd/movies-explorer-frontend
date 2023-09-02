@@ -43,12 +43,12 @@ function MoviesCard(props) {
   function getNormalizedDuration() {
     const hours = Math.floor(props.duration / 60);
 
-    if(!hours) {
+    if (!hours) {
       return `${props.duration} ${getMinutes(props.duration)}`
     } else {
       const minutes = props.duration % 60;
 
-      if(!minutes) {
+      if (!minutes) {
         return `${hours} ${getHours(hours)}`
       } else {
         return `${hours} ${getHours(hours)} ${minutes} ${getMinutes(minutes)}`
@@ -79,7 +79,7 @@ function MoviesCard(props) {
       </div>
 
       <a className="link" href={props.trailer} rel="noreferrer" target="_blank">
-        <img className='movies-card__image' src={props.image} alt={`Обложка фильма "${props.title}"`}/>
+        <img className='movies-card__image' src={props.image} alt={`Обложка фильма "${props.title}"`} />
       </a>
 
       {

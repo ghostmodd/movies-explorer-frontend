@@ -1,5 +1,5 @@
 import React from "react";
-import {Routes, Route, useNavigate} from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import ProtectedRouteElement from "../ProtectedRouteElement/ProtectedRouteElement";
 import './App.css'
 import Main from "../Main/Main";
@@ -13,8 +13,8 @@ import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import moviesApi from "../../utils/api/MoviesApi";
 import mainApi from "../../utils/api/MainApi";
 import useLocalStorage from "../../utils/hooks/useLocalStorage";
-import {CurrentUserContext} from "../../utils/context/CurrentUserContext";
-import {getArrayWithoutObject} from "../../utils/utils/ArrayOperations";
+import { CurrentUserContext } from "../../utils/context/CurrentUserContext";
+import { getArrayWithoutObject } from "../../utils/utils/ArrayOperations";
 import handleSortMovies from "../../utils/utils/MoviesSorter";
 
 
@@ -35,6 +35,7 @@ function App() {
     {
       query: "",
       isSearchingShortMovies: false,
+      isSearchingFirstTime: true,
     }
   );
   const [searchMoviesError, setSearchMoviesError] = useLocalStorage("searchMoviesError", "");
@@ -46,6 +47,7 @@ function App() {
     {
       query: "",
       isSearchingShortMovies: false,
+      isSearchingFirstTime: true,
     }
   );
   const [searchSavedMoviesError, setSearchSavedMoviesError] = useLocalStorage("searchSavedMoviesError", "");
@@ -121,7 +123,7 @@ function App() {
         toggleIsLogged(true);
       })
       .then(() => {
-        navigate("/movies", {replace: true})
+        navigate("/movies", { replace: true })
       })
       .catch((err) => {
         if (err === 401) {
@@ -215,17 +217,17 @@ function App() {
   }
 
   function handleSaveMovie({
-                             nameRU,
-                             nameEN,
-                             image,
-                             description,
-                             director,
-                             country,
-                             duration,
-                             trailerLink,
-                             year,
-                             id,
-                           }) {
+    nameRU,
+    nameEN,
+    image,
+    description,
+    director,
+    country,
+    duration,
+    trailerLink,
+    year,
+    id,
+  }) {
     const imageUrl = "https://api.nomoreparties.co/" + image.url;
     mainApi.saveMovie({
       nameRU,
@@ -290,57 +292,57 @@ function App() {
     <CurrentUserContext.Provider value={userInfo}>
       <div className='app'>
         <Routes>
-          <Route path="/" element={<Main loggedIn={isLogged} openBurgerMenu={handleOpenBurgerMenu}/>}/>
+          <Route path="/" element={<Main loggedIn={isLogged} openBurgerMenu={handleOpenBurgerMenu} />} />
 
           <Route path="/movies"
-                 element={<ProtectedRouteElement element={Movies} loggedIn={isLogged} movies={moviesSearchResult}
-                                                 onSearch={handleSearchMovies}
-                                                 searchQuery={searchMoviesQuery}
-                                                 setSearchQuery={setSearchMoviesQuery}
-                                                 setIsSearching={setIsSearching}
-                                                 searchError={searchMoviesError}
-                                                 onSaveMovie={handleSaveMovie}
-                                                 onDeleteMovie={handleDeleteMovie}
-                                                 isSearching={isSearching}
-                                                 openBurgerMenu={handleOpenBurgerMenu}
-                                                 checkIsCardSaved={checkIsCardSaved}
-                 />}
+            element={<ProtectedRouteElement element={Movies} loggedIn={isLogged} movies={moviesSearchResult}
+              onSearch={handleSearchMovies}
+              searchQuery={searchMoviesQuery}
+              setSearchQuery={setSearchMoviesQuery}
+              setIsSearching={setIsSearching}
+              searchError={searchMoviesError}
+              onSaveMovie={handleSaveMovie}
+              onDeleteMovie={handleDeleteMovie}
+              isSearching={isSearching}
+              openBurgerMenu={handleOpenBurgerMenu}
+              checkIsCardSaved={checkIsCardSaved}
+            />}
           />
 
           <Route path="/saved-movies"
-                 element={<ProtectedRouteElement
-                   element={SavedMovies} loggedIn={isLogged}
-                   movies={savedMoviesSearchResult.length === 0 ? savedMovies : savedMoviesSearchResult}
-                   onSearch={handleSearchSavedMovies}
-                   searchQuery={searchSavedMoviesQuery}
-                   setSearchQuery={setSearchSavedMoviesQuery}
-                   setIsSearching={setIsSearching}
-                   searchError={searchSavedMoviesError}
-                   onDeleteMovie={handleDeleteMovie}
-                   openBurgerMenu={handleOpenBurgerMenu}
-                 />}
+            element={<ProtectedRouteElement
+              element={SavedMovies} loggedIn={isLogged}
+              movies={savedMoviesSearchResult.length === 0 ? savedMovies : savedMoviesSearchResult}
+              onSearch={handleSearchSavedMovies}
+              searchQuery={searchSavedMoviesQuery}
+              setSearchQuery={setSearchSavedMoviesQuery}
+              setIsSearching={setIsSearching}
+              searchError={searchSavedMoviesError}
+              onDeleteMovie={handleDeleteMovie}
+              openBurgerMenu={handleOpenBurgerMenu}
+            />}
           />
 
           <Route path="/profile"
-                 element={<ProtectedRouteElement element={Profile} loggedIn={isLogged} formError={profileFormError}
-                                                 setFormError={setProfileFormError} notification={profileNotification}
-                                                 setNotification={setProfileNotification}
-                                                 onEditProfile={handleEditProfile}
-                                                 onExitAccount={handleExitAccount}
-                                                 openBurgerMenu={handleOpenBurgerMenu}
-                 />}
+            element={<ProtectedRouteElement element={Profile} loggedIn={isLogged} formError={profileFormError}
+              setFormError={setProfileFormError} notification={profileNotification}
+              setNotification={setProfileNotification}
+              onEditProfile={handleEditProfile}
+              onExitAccount={handleExitAccount}
+              openBurgerMenu={handleOpenBurgerMenu}
+            />}
           />
 
           <Route path="/signup" element={<Register onRegister={handleRegister} formError={registerFormError}
-                                                   setFormError={setRegisterFormError}/>}/>
+            setFormError={setRegisterFormError} />} />
 
           <Route path="/signin"
-                 element={<Login onLogin={handleLogin} formError={loginFormError} setFormError={setLoginFormError}/>}/>
+            element={<Login onLogin={handleLogin} formError={loginFormError} setFormError={setLoginFormError} />} />
 
-          <Route path="*" element={<NotFoundPage/>}/>
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
 
-        <BurgerMenuPopup isOpened={popupStatus.burgerMenu} onClose={handleCloseAllPopups}/>
+        <BurgerMenuPopup isOpened={popupStatus.burgerMenu} onClose={handleCloseAllPopups} />
       </div>
     </CurrentUserContext.Provider>
   );

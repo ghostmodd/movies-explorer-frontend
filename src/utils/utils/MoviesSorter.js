@@ -1,8 +1,10 @@
 // функция сортировки фильмов
+import { ShortMoviesDuration } from "../constants/constants";
+
 function handleSortMovies(movies, queryString, isSearchingShortMovies) {
   // манипуляции с запросом: удаление пробелов и приведение к нижнему регистру
   let query;
-  if(queryString) {
+  if (queryString) {
     const queryRegexp = /^\s+|\s(?=\s)|\s+$/g;
     query = queryString.replace(queryRegexp, "").toLowerCase();
   }
@@ -12,7 +14,7 @@ function handleSortMovies(movies, queryString, isSearchingShortMovies) {
   }
 
   function _checkIfShortMovies(movieItem) {
-    if (isSearchingShortMovies && movieItem.duration <= 40) {
+    if (isSearchingShortMovies && movieItem.duration <= ShortMoviesDuration) {
       return true;
     } else if (!isSearchingShortMovies) {
       return true;

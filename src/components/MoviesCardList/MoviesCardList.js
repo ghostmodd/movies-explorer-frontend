@@ -80,9 +80,7 @@ function MoviesCardList(props) {
   }
 
   React.useEffect(() => {
-    if (!moviesCardCount) {
-      setMoviesCardCount(calculateCardCount());
-    }
+    setMoviesCardCount(calculateCardCount());
 
     window.addEventListener("resize", handleResize);
   }, [props.movies]);

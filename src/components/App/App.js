@@ -42,15 +42,12 @@ function App() {
   const [moviesSearchResult, setMoviesSearchResult] = useLocalStorage("moviesSearchResult", []);
 
   const [savedMovies, setSavedMovies] = React.useState([]);
-  const [searchSavedMoviesQuery, setSearchSavedMoviesQuery] = useLocalStorage(
-    "searchSavedMoviesQuery",
-    {
+  const [searchSavedMoviesQuery, setSearchSavedMoviesQuery] = React.useState({
       query: "",
       isSearchingShortMovies: false,
       isSearchingFirstTime: true,
-    }
-  );
-  const [searchSavedMoviesError, setSearchSavedMoviesError] = useLocalStorage("searchSavedMoviesError", "");
+    });
+  const [searchSavedMoviesError, setSearchSavedMoviesError] = React.useState("");
   const [savedMoviesSearchResult, setSavedMoviesSearchResult] = React.useState([]);
 
   // Данные попапа
@@ -105,8 +102,7 @@ function App() {
   function handleRegister(registrationParams = {}) {
     mainApi.register(registrationParams)
       .then(() => {
-        toggleIsLogged(true);
-        navigate("/movies");
+        handleLogin(registrationParams);
       })
       .catch((err) => {
         if (err === 409) {
@@ -276,12 +272,16 @@ function App() {
   function handleDeleteMovie(rawMovieId) {
     const movieId = getCorrectMovieId(rawMovieId);
     const card = savedMovies.filter((item) => {
-      return item._id === movieId;
+      return item.movieId === rawMovieId;
     });
 
     mainApi.deleteMovie(movieId)
       .then(() => {
-        setSavedMovies(getArrayWithoutObject(savedMovies, card));
+        setSavedMovies(getArrayWithoutObject(savedMovies, card[0]));
+
+        if(savedMoviesSearchResult.length > 0) {
+          setSavedMoviesSearchResult(getArrayWithoutObject(savedMoviesSearchResult, card[0]));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -318,6 +318,7 @@ function App() {
               setSearchQuery={setSearchSavedMoviesQuery}
               setIsSearching={setIsSearching}
               searchError={searchSavedMoviesError}
+              setSearchErrpr={setSearchSavedMoviesError}
               onDeleteMovie={handleDeleteMovie}
               openBurgerMenu={handleOpenBurgerMenu}
             />}

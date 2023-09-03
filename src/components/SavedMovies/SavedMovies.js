@@ -6,6 +6,20 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 
 function SavedMovies(props) {
+  React.useEffect(() => {
+    if(props.searchQuery.query || props.searchQuery.isSearchingShortMovies || props.searchQuery.isSearchingFirstTime) {
+      props.setSearchQuery({
+        query: "",
+        isSearchingShortMovies: false,
+        isSearchingFirstTime: true,
+      });
+    }
+
+    if(props.searchError) {
+      props.setSearchErrpr("");
+    }
+  }, []);
+
   return (
     <>
       <Header place="saved-movies" backgroundColor="black" >

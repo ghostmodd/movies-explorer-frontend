@@ -5,7 +5,7 @@ import searchFormIcon from "../../images/search-form__icon.svg";
 function SearchForm(props) {
   const [searchError, changeSearchError] = React.useState("");
 
-  async function onCheckboxChecked() {
+  function onCheckboxChecked() {
     props.setSearchQuery({
       ...props.searchQuery,
       isSearchingShortMovies: !props.searchQuery.isSearchingShortMovies,

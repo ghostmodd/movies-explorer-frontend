@@ -45,7 +45,7 @@ function App() {
   const [searchSavedMoviesQuery, setSearchSavedMoviesQuery] = React.useState({
       query: "",
       isSearchingShortMovies: false,
-      isSearchingFirstTime: true,
+      isSearchingFirstTime: false,
     });
   const [searchSavedMoviesError, setSearchSavedMoviesError] = React.useState("");
   const [savedMoviesSearchResult, setSavedMoviesSearchResult] = React.useState([]);
@@ -312,7 +312,9 @@ function App() {
           <Route path="/saved-movies"
             element={<ProtectedRouteElement
               element={SavedMovies} loggedIn={isLogged}
-              movies={savedMoviesSearchResult.length === 0 ? savedMovies : savedMoviesSearchResult}
+              movies={savedMovies}
+              searchResult={savedMoviesSearchResult}
+              setMoviesSearchResult={setSavedMoviesSearchResult}
               onSearch={handleSearchSavedMovies}
               searchQuery={searchSavedMoviesQuery}
               setSearchQuery={setSearchSavedMoviesQuery}

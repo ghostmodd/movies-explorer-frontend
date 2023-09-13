@@ -24,6 +24,12 @@ function Portfolio() {
             Одностраничное приложение
           </a>
         </li>
+
+        <li className="full-page-list__item">
+          <a className="full-page-list__link link" href="https://ghostmodd.github.io/avito-frontend-intership-2023/" rel="noreferrer" target="_blank">
+            Приложение на TypeScript и Redux
+          </a>
+        </li>
       </ul>
     </section>
   )
